@@ -13,7 +13,7 @@ EXECUTE_PATH=${3:-'/'}
 bom_go() {
   echo "Starting sbom generation..........."
 
-  local dir=${:4}  
+  local dir=${1:4}  
 
   mkdir -p $OUTPUT_DIR$dir
 
