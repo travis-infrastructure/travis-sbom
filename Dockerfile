@@ -28,7 +28,7 @@ RUN go install github.com/CycloneDX/cyclonedx-gomod/cmd/cyclonedx-gomod@latest
 
 # Install cyclonedx-node
 
-RUN npm install -y @cyclonedx/bom -g
+RUN npm install -y @cyclonedx/cyclonedx-npm -g
 
 # Install cyclonedx-python
 

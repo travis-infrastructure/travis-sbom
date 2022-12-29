@@ -13,7 +13,7 @@ EXECUTE_PATH=${3:-'/'}
 bom_go() {
   echo "Starting sbom generation..........."
 
-  local dir=${1:4}  
+  local dir=${:4}  
 
   mkdir -p $OUTPUT_DIR$dir
 
@@ -32,11 +32,11 @@ bom_go() {
 bom_node() {
   echo "Starting Node sbom generation..........."
 
-  local dir=${1:4}  
+  local dir=${2:4}
 
   mkdir -p $OUTPUT_DIR$dir
 
-  cyclonedx-node -o $OUTPUT_DIR$dir/node_bom.$OUTPUT_FORMAT_DX ${1}
+  cyclonedx-npm --output-file $OUTPUT_DIR$dir/node_bom.$OUTPUT_FORMAT_DX --output-format $OUTPUT_FORMAT_DX ${1}
 
   if [ "$OUTPUT_FORMAT" == "spdx-json" ]; then
     cyclonedx-cli convert --input-file $OUTPUT_DIR$dir/node_bom.$OUTPUT_FORMAT_DX --output-format spdxjson --output-file $OUTPUT_DIR$dir/node_bom_spdx.$OUTPUT_FORMAT_DX
@@ -185,7 +185,7 @@ execute() {
         ;;
         *"/go.mod") echo "Searching go files..." && bom_go $dir
         ;;
-        *"/package-lock.json") echo "Searching node package files..." && bom_node $dir
+        *"/package-lock.json") echo "Searching node package files..." && bom_node $file $dir
         ;;
         *"/Pipfile.lock") echo "Searching python package files..." && bom_python $file $dir "-pip"
         ;;
