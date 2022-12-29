@@ -51,7 +51,7 @@ bom_node() {
 bom_ruby() {
   echo "Starting Ruby sbom generation..........."
 
-  local dir=${2:4}  
+  local dir=${1:4}  
 
   mkdir -p $OUTPUT_DIR$dir
 
