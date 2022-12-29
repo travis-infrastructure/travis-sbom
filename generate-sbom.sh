@@ -191,7 +191,7 @@ execute() {
         ;;
         *"/poetry.lock") echo "Searching python package files..." && bom_python $file $dir "-p"
         ;;
-        *"/requirements.txt") echo "Searching python package files..." && bom_python $file "-r"
+        *"/requirements.txt") echo "Searching python package files..." && bom_python $file $dir "-r"
         ;;
         *"/composer.json") echo "Searching composer package files..." && bom_php $file $dir
         ;;
