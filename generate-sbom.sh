@@ -36,6 +36,10 @@ bom_node() {
 
   mkdir -p $OUTPUT_DIR$dir
 
+  pushd ${2}
+  npm install
+  popd
+  
   cyclonedx-npm --output-file $OUTPUT_DIR$dir/node_bom.$OUTPUT_FORMAT_DX --output-format $OUTPUT_FORMAT_DX ${1}
 
   if [ "$OUTPUT_FORMAT" == "spdx-json" ]; then
@@ -99,8 +103,8 @@ bom_php() {
   composer make-bom --working-dir=$2 --output-format=$OUTPUT_FORMAT_DX --output-file=$OUTPUT_DIR$dir/php_composer_bom.$OUTPUT_FORMAT_DX $1
 
   if [ "$OUTPUT_FORMAT" == "spdx-json" ]; then
-    cyclonedx-cli convert --input-file $OUTPUT_DIR/${base}_php_composer_bom.$OUTPUT_FORMAT_DX --output-format spdxjson --output-file $OUTPUT_DIR/${base}_php_composer_bom_spdx.$OUTPUT_FORMAT_DX
-    rm -f $OUTPUT_DIR/${base}_php_composer_bom.$OUTPUT_FORMAT_DX
+    cyclonedx-cli convert --input-file $OUTPUT_DIR$dir/php_composer_bom.$OUTPUT_FORMAT_DX --output-format spdxjson --output-file $OUTPUT_DIR$dir/php_composer_bom_spdx.$OUTPUT_FORMAT_DX
+    rm -f $OUTPUT_DIR$dir/php_composer_bom.$OUTPUT_FORMAT_DX
   fi
 
   echo "Finished PHP sbom generation"
