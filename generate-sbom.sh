@@ -33,15 +33,22 @@ bom_node() {
   echo "Starting Node sbom generation..........."
 
   local dir=${2:4}
+  local clean_up=0;
 
   mkdir -p $OUTPUT_DIR$dir
 
-  pushd ${2}
-  npm install
-  chmod -R 777 node_modules
-  popd
+  if [[ ! -d "${2}/node_modules" ]]; then
+    pushd ${2}
+    npm install
+    clean_up=1;
+    popd
+  fi
   
   cyclonedx-npm --output-file $OUTPUT_DIR$dir/node_bom.$OUTPUT_FORMAT_DX --output-format $OUTPUT_FORMAT_DX ${1}
+
+  if [[ $clean_up == 1 ]]; then
+    rm -rf ${2}/node_modules
+  fi
 
   if [ "$OUTPUT_FORMAT" == "spdx-json" ]; then
     cyclonedx-cli convert --input-file $OUTPUT_DIR$dir/node_bom.$OUTPUT_FORMAT_DX --output-format spdxjson --output-file $OUTPUT_DIR$dir/node_bom_spdx.$OUTPUT_FORMAT_DX
