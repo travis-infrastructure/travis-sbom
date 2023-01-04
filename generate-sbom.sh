@@ -36,7 +36,7 @@ bom_node() {
 
   mkdir -p $OUTPUT_DIR$dir
 
-  if [[ -z ${2}/node_modules ]]; then
+  if [[ -d "${2}/node_modules" ]]; then
     pushd ${2}
     npm install
     chmod -R 755 node_modules
