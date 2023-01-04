@@ -36,12 +36,10 @@ bom_node() {
 
   mkdir -p $OUTPUT_DIR$dir
 
-  if [[ -d "${2}/node_modules" ]]; then
-    pushd ${2}
-    npm install
-    chmod -R 755 node_modules
-    popd
-  fi
+  pushd ${2}
+  npm install
+  chmod -R 777 node_modules
+  popd
   
   cyclonedx-npm --output-file $OUTPUT_DIR$dir/node_bom.$OUTPUT_FORMAT_DX --output-format $OUTPUT_FORMAT_DX ${1}
 
