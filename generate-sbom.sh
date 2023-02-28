@@ -11,9 +11,13 @@ EXECUTE_PATH=${3:-'/'}
 # SBOM
 # <<-- GO SBOM
 bom_go() {
-  echo "Starting sbom generation..........."
+  echo "Starting GO sbom generation..........."
 
-  local dir=${1:4}  
+  local dir=${1:4}
+
+  echo "Output SBOM format: $OUTPUT_FORMAT"
+  echo "Using SBOM tool: cyclonedx-gomod"
+  echo "Output file path relative to output directory: $dir"
 
   mkdir -p $OUTPUT_DIR$dir
 
@@ -34,6 +38,10 @@ bom_node() {
 
   local dir=${2:4}
   local clean_up=0;
+
+  echo "Output SBOM format: $OUTPUT_FORMAT"
+  echo "Using SBOM tool: cyclonedx-npm"
+  echo "Output file path relative to output directory: $dir"
 
   mkdir -p $OUTPUT_DIR$dir
 
@@ -63,7 +71,11 @@ bom_node() {
 bom_ruby() {
   echo "Starting Ruby sbom generation..........."
 
-  local dir=${1:4}  
+  local dir=${1:4}
+
+  echo "Output SBOM format: $OUTPUT_FORMAT"
+  echo "Using SBOM tool: cyclonedx-ruby"
+  echo "Output file path relative to output directory: $dir"
 
   mkdir -p $OUTPUT_DIR$dir
 
@@ -82,7 +94,11 @@ bom_ruby() {
 bom_python() {
   echo "Starting Python sbom generation..........."
 
-  local dir=${2:4}  
+  local dir=${2:4}
+
+  echo "Output SBOM format: $OUTPUT_FORMAT"
+  echo "Using SBOM tool: cyclonedx-py"
+  echo "Output file path relative to output directory: $dir"
 
   mkdir -p $OUTPUT_DIR$dir
 
@@ -106,6 +122,9 @@ bom_php() {
 
   local dir=${2:4}  
 
+  echo "Output SBOM format: $OUTPUT_FORMAT"
+  echo "Output file path relative to output directory: $dir"
+
   mkdir -p $OUTPUT_DIR$dir
 
   composer make-bom --working-dir=$2 --output-format=$OUTPUT_FORMAT_DX --output-file=$OUTPUT_DIR$dir/php_composer_bom.$OUTPUT_FORMAT_DX $1
@@ -124,6 +143,10 @@ bom_cpp() {
   echo "Starting Conan sbom generation..........."
 
   local dir=${2:4}  
+
+  echo "Output SBOM format: $OUTPUT_FORMAT"
+  echo "Using SBOM tool: cyclonedx-conan"
+  echo "Output file path relative to output directory: $dir"
 
   mkdir -p $OUTPUT_DIR$dir
 
@@ -144,6 +167,10 @@ bom_java() {
   echo "Starting Java sbom generation..........."
 
   local dir=${1:4}  
+
+  echo "Output SBOM format: $OUTPUT_FORMAT"
+  echo "Using SBOM tool: syft"
+  echo "Output file path relative to output directory: $dir"
 
   mkdir -p $OUTPUT_DIR$dir
 
